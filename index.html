@@ -1,55 +1,109 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Hamim Crypto Gamer</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body{
-      font-family: Arial;
-      background:#0f172a;
-      color:white;
-      text-align:center;
-      margin:0;
-    }
-    header{
-      background:#111827;
-      padding:20px;
-      font-size:22px;
-      font-weight:bold;
-    }
-    .box{
-      background:#1e293b;
-      margin:20px;
-      padding:20px;
-      border-radius:10px;
-    }
-    a{
-      color:#38bdf8;
-      text-decoration:none;
-      font-weight:bold;
-    }
-  </style>
+<title>Hamim Crypto Gamer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{margin:0;font-family:Arial;background:#0f172a;color:white}
+header{background:#111827;padding:15px;text-align:center;font-size:20px;font-weight:bold}
+nav{background:#1e293b;padding:10px;text-align:center}
+nav a{color:#38bdf8;margin:10px;text-decoration:none;font-weight:bold}
+section{padding:20px;text-align:center}
+.box{background:#1e293b;margin:15px;padding:15px;border-radius:10px}
+canvas{background:#000;border-radius:10px;margin-top:10px}
+button{padding:10px 15px;background:#38bdf8;border:none;border-radius:5px}
+</style>
 </head>
 <body>
 
-<header>
-🎮 Hamim Crypto Gamer 💰
-</header>
+<header>🎮 Hamim Crypto Gamer 💰</header>
+
+<nav>
+<a href="#home">Home</a>
+<a href="#games">Games</a>
+<a href="#articles">Articles</a>
+</nav>
+
+<section id="home">
+<h2>Welcome</h2>
+<p>Game + Crypto + Virtual Card সম্পর্কিত ওয়েবসাইট।</p>
+</section>
+
+<section id="games">
+<h2>🐍 Snake Game</h2>
+<canvas id="snake" width="300" height="300"></canvas>
+
+<h2>🎯 Click Game</h2>
+<p>Score: <span id="score">0</span></p>
+<button onclick="addScore()">Click Me!</button>
+</section>
+
+<section id="articles">
+<h2>💰 Articles</h2>
 
 <div class="box">
-<h2>🎮 Play Game</h2>
-<p>Snake Game coming soon...</p>
+<h3>1️⃣ Virtual Card কি?</h3>
+<p>Virtual Card হলো একটি ডিজিটাল কার্ড যা অনলাইনে পেমেন্ট করার জন্য ব্যবহার করা হয়। এটি ফিজিক্যাল কার্ড ছাড়াই কাজ করে। নিরাপত্তা বেশি এবং সহজ ব্যবহারের জন্য জনপ্রিয়।</p>
 </div>
 
 <div class="box">
-<h2>💰 Latest Article</h2>
-<p>Virtual Card কি? শীঘ্রই আসছে...</p>
+<h3>2️⃣ Crypto Currency কি?</h3>
+<p>Cryptocurrency হলো ডিজিটাল মুদ্রা যা Blockchain প্রযুক্তির মাধ্যমে পরিচালিত হয়। Bitcoin, Ethereum এর উদাহরণ।</p>
 </div>
 
 <div class="box">
-<h2>📝 About</h2>
-<p>Game + Crypto + Virtual Card সম্পর্কিত ব্লগ।</p>
+<h3>3️⃣ Crypto Scam চিনবেন কিভাবে?</h3>
+<p>যদি কেউ গ্যারান্টি লাভের কথা বলে, আগে সতর্ক হন। অজানা লিংকে ক্লিক করবেন না এবং সবসময় অফিসিয়াল ওয়েবসাইট ব্যবহার করুন।</p>
 </div>
+
+</section>
+
+<script>
+/* Snake Game */
+const canvas=document.getElementById("snake");
+const ctx=canvas.getContext("2d");
+let box=15;
+let snake=[{x:150,y:150}];
+let food={x:Math.floor(Math.random()*20)*box,y:Math.floor(Math.random()*20)*box};
+let direction;
+document.addEventListener("keydown",d);
+function d(e){
+if(e.keyCode==37)direction="LEFT";
+if(e.keyCode==38)direction="UP";
+if(e.keyCode==39)direction="RIGHT";
+if(e.keyCode==40)direction="DOWN";
+}
+function draw(){
+ctx.fillStyle="#000";
+ctx.fillRect(0,0,300,300);
+for(let i=0;i<snake.length;i++){
+ctx.fillStyle=i==0?"#38bdf8":"white";
+ctx.fillRect(snake[i].x,snake[i].y,box,box);
+}
+ctx.fillStyle="red";
+ctx.fillRect(food.x,food.y,box,box);
+let snakeX=snake[0].x;
+let snakeY=snake[0].y;
+if(direction=="LEFT")snakeX-=box;
+if(direction=="UP")snakeY-=box;
+if(direction=="RIGHT")snakeX+=box;
+if(direction=="DOWN")snakeY+=box;
+if(snakeX==food.x && snakeY==food.y){
+food={x:Math.floor(Math.random()*20)*box,y:Math.floor(Math.random()*20)*box};
+}else{snake.pop();}
+let newHead={x:snakeX,y:snakeY};
+if(snakeX<0||snakeY<0||snakeX>=300||snakeY>=300){clearInterval(game);}
+snake.unshift(newHead);
+}
+let game=setInterval(draw,100);
+
+/* Click Game */
+let score=0;
+function addScore(){
+score++;
+document.getElementById("score").innerText=score;
+}
+</script>
 
 </body>
 </html>
